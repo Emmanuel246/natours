@@ -1,0 +1,22 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "A nodejs App from udemy for learning ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Emmanuel246/natours.git"
+  },
+  "author": "Makanjuola Emmanuel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Emmanuel246/natours/issues"
+  },
+  "homepage": "https://github.com/Emmanuel246/natours#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
