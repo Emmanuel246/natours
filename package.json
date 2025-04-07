@@ -4,7 +4,7 @@
   "description": "A nodejs App from udemy for learning ",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
