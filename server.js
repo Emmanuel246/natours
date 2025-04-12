@@ -14,6 +14,7 @@ mongoose
     useCreateIndex: true,
     useFindAndModify: false,
     useUnifiedTopology: true,
+    readPreference: 'primary', 
   })
   .then(() => console.log("DB connection successful"));
 

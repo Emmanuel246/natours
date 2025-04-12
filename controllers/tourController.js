@@ -1,5 +1,5 @@
 const Tour = require("./../models/tourModel");
-const tour = require("./../models/tourModel");
+
 
 // exports.checkID = (req, res, next, val) => {
 //   console.log(`Tour id is: ${val}`);
@@ -15,7 +15,50 @@ const tour = require("./../models/tourModel");
 
 exports.getAllTours = async (req, res) => {
   try {
-  const tours = await Tour.find();
+    console.log(req.query);
+    // BUILD QUERY
+    // 1) filtering
+    const queryObj = { ...req.query };
+    const excludedFields = ["page", "sort", "limit", "fields"];
+    excludedFields.forEach((el) => delete queryObj[el]);
+
+  //  2) ADVANCED FILTERING
+
+  
+  // {difficulty: "easy", duration: { $gte: 5 } }
+  // { 'duration[gte]': '5', difficulty: 'easy' }
+
+
+  let queryStr = JSON.stringify(queryObj);
+   queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+
+   let query =  Tour.find(JSON.parse(queryStr));
+
+   //2 Sorting
+   if(req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    console.log(sortBy);
+    query = query.sort(sortBy);
+
+   } else {
+    query = query.sort("-createdAt");
+   }
+
+   // 3) field limiting
+    if(req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      query = query.select(fields);
+    } else {
+      query = query.select("-__v");
+    }
+
+// execute query
+  const tours = await query;
+
+    // const tour = await Tour.find().where("duration").equals(5).where("difficulty").equals("easy");
+
+  // send response
   res.status(200).json({
     status: "success",
     results: tours.length,
