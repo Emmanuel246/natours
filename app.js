@@ -1,6 +1,7 @@
-
 const express = require("express");
 const morgan = require("morgan");
+const AppError = require("./utils/appError");
+const globalErrorHandler = require("./controllers/errorController");
 
 const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes");
@@ -17,11 +18,11 @@ app.use((req, res, next) => {
   next();
 });
 
+
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
-
 
 // routes
 // app.get("/api/v1/tours", getAllTours);
@@ -31,12 +32,15 @@ app.use((req, res, next) => {
 // app.delete("/api/v1/tours/:id", deleteTour);
 
 
-
-
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 
 
+app.all("/{*any}", (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
+});
+
+app.use(globalErrorHandler);
 
 // start server
 module.exports = app;
