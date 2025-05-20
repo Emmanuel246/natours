@@ -134,12 +134,15 @@ tourSchema.virtual('reviews', {
   localField: '_id'
 });
 
+// tourSchema.index({price: 1});
+tourSchema.index({price: 1, ratingsAverage: -1});
+tourSchema.index({slug: 1});
+
 // Document Middlware: runs before .save() and .create()
 tourSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
-
 
 // Query Middleware
 tourSchema.pre(/^find/, function (next) {
