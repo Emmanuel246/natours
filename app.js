@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
@@ -15,8 +16,13 @@ const { whitelist } = require("validator");
 
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'))
 //Global Middleware
+// serving static files
+app.use(express.static(path.join(__dirname, 'public')));
 // Security HTTP headers
+
 app.use(helmet());
 // Development loggin
 if (process.env.NODE_ENV === "development") {
@@ -49,8 +55,7 @@ app.use(hpp({
     "price",
   ],
 }));
-// serving static files
-app.use(express.static(`${__dirname}/public`));
+
 
 // Test middleware
 app.use((req, res, next) => {
@@ -58,12 +63,15 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   console.log(req.headers);
   next();
 });
+
+app.get('/', (req, res, next) => {
+  res.status(200).render('base');
+})
 
 // routes
 // app.get("/api/v1/tours", getAllTours);
