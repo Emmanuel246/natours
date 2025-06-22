@@ -13,6 +13,7 @@ var map = new mapboxgl.Map({
   // interactive: false
 });
 
+
 const bounds = new mapboxgl.LngLatBounds();
 
 locations.forEach((loc) => {

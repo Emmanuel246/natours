@@ -23,8 +23,8 @@ app.set('views', path.join(__dirname, 'views'))
 // serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 // Security HTTP headers
+app.use( helmet({ contentSecurityPolicy: false }) );
 
-app.use(helmet());
 // Development loggin
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -44,6 +44,7 @@ app.use(express.json({limit: "10kb"}));
 app.use(mongoSanitize());
 // Data Sanitization against XSS
 app.use(xss());
+
 
 // Prevent parameter pollution
 app.use(hpp({
