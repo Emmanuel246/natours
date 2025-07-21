@@ -66,6 +66,7 @@ exports.createUser = (req, res) => {
 //Do Not use this to change password.
 
 
+
 // exports.deleteUser = (req, res) => {
 //   res.status(500).json({
 //     status: "Error",

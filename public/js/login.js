@@ -1,7 +1,6 @@
 // const axios = require('axios');
-import axios from 'axios';
-import { showAlert } from './alert'
-
+import axios from "axios";
+import { showAlert } from "./alert";
 
 export const login = async (email, password) => {
   try {
@@ -18,30 +17,29 @@ export const login = async (email, password) => {
         "Content-Type": "application/json",
       },
     });
-    if (res.data.status === 'success') {
-      showAlert('success', 'Logged in successfully!');
+    if (res.data.status === "success") {
+      showAlert("success", "Logged in successfully!");
       window.setTimeout(() => {
-        location.assign('/');
+        location.assign("/");
       }, 1500);
     }
   } catch (err) {
-   showAlert('error', err.response.data.message);
+    showAlert("error", err.response.data.message);
   }
 };
-
 
 export const logout = async () => {
   try {
     const res = await axios({
-      method: 'GET',
+      method: "GET",
       url: "/api/v1/users/logout",
     });
 
-    if ((res.data.status = 'success')) location.reload(true);
+    if ((res.data.status = "success")) location.reload(true);
   } catch (err) {
-    showAlert('error', "Error Logging out! Try Again!")
+    showAlert("error", "Error Logging out! Try Again!");
   }
-}
+};
 
 // const login = (email, password) => {
 //     alert(email, password)
