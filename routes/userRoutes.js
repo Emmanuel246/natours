@@ -24,6 +24,7 @@ userRouter.patch(
 userRouter.patch
   ("/updateMe",
     userController.uploadUserPhoto,
+    userController.resizeUserPhoto,
   userController.updateMe
 );
 userRouter.delete(
