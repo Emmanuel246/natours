@@ -74,5 +74,5 @@ module.exports = class Emal {
 //             console.log("Email sent: " + info.response);
 //         }
 //     });
-}
+// }
 
