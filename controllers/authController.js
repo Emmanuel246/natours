@@ -76,14 +76,13 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
-
 exports.logout = async (req, res) => {
-  res.cookie('jwt', 'loggedout', {
+  res.cookie("jwt", "loggedout", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
-  res.status(200).json({ status: 'success' })}
-
+  res.status(200).json({ status: "success" });
+};
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check of it's there
@@ -154,7 +153,7 @@ exports.isLoggedIn = async (req, res, next) => {
       // 1) verify token
       const decoded = await promisify(jwt.verify)(
         req.cookies.jwt,
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
       );
 
       // 2) Check if user still exists
@@ -203,15 +202,10 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // 3) Send it to user's email
-  const resetURL = `${req.protocol}://${req.get("host")}/api/v1/users/resetPassword/${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
   try {
-    // await sendEmail({
-    //   email: user.email,
-    //   subject: "Your password reset token (valid for 10 min)",
-    //   message,
-    // });
+    const resetURL = `${req.protocol}://${req.get("host")}/api/v1/users/resetPassword/${resetToken}`;
+    await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
       status: "success",
