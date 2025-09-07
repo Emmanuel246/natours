@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { getDefaultHighWaterMark } = require('nodemailer/lib/xoauth2');
 
 const bookingSchema = new mongoose.Schema({
     tour: {
@@ -31,9 +30,10 @@ bookingSchema.pre(/^find/, function (next) {
         path: 'tour',
         select: 'name'
     });
+    next();
 });
 
 
-const Booking = mongoose.model('Booking', bookingSchema)
+const Booking = mongoose.model('Booking', bookingSchema);
 
 module.exports = Booking;
