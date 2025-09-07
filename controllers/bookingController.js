@@ -3,6 +3,7 @@ dotenv.config({ path: './config.env' });
 const Stripe = require('stripe');
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const Tour = require("../models/tourModel");
+const Booking = require("../models/BookingModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const factory = require("./handlerFactory");
@@ -40,4 +41,13 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     status: 'success',
     session,
   });
+});
+
+exports.createBookingCheckout = catchAsync(async (req, res, next) => {
+  // This is only TEMPORARY, because its unsecure everyone can make bookings without paying
+  const { tour, user, price } = req.query;
+  if (!tour && !user && !price) return next();
+  await Booking.create({tour, user, price});
+
+  res.redirect(req.originalUrl.split('?')[0]);
 });
