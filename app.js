@@ -26,6 +26,40 @@ app.set("views", path.join(__dirname, "views"));
 // serving static files
 app.use(express.static(path.join(__dirname, "public")));
 // Security HTTP headers
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: {
+//       directives: {
+//         defaultSrc: ["'self'", "data:", "blob:", "https:", "ws:"],
+//         baseUri: ["'self'"],
+//         fontSrc: ["'self'", "https:", "data:"],
+//         scriptSrc: [
+//           "'self'",
+//           "https:",
+//           "http:",
+//           "blob:",
+//           "'unsafe-inline'",
+//           "'unsafe-eval'",
+//           "js.stripe.com",
+//         ],
+//         styleSrc: ["'self'", "https:", "'unsafe-inline'"],
+//         imgSrc: ["'self'", "data:", "blob:"],
+//         connectSrc: [
+//           "'self'",
+//           "blob:",
+//           "https:",
+//           "ws:",
+//           "http://127.0.0.1:3000",
+//           "http://localhost:3000",
+//           "https://js.stripe.com",
+//         ],
+//         frameSrc: ["'self'", "https://js.stripe.com"],
+//         childSrc: ["'self'", "blob:"],
+//       },
+//     },
+//   }),
+// );
+
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -40,7 +74,7 @@ app.use(
           "blob:",
           "'unsafe-inline'",
           "'unsafe-eval'",
-          "js.stripe.com",
+          "https://js.stripe.com",
         ],
         styleSrc: ["'self'", "https:", "'unsafe-inline'"],
         imgSrc: ["'self'", "data:", "blob:"],
@@ -52,13 +86,15 @@ app.use(
           "http://127.0.0.1:3000",
           "http://localhost:3000",
           "https://js.stripe.com",
+          "https://api.stripe.com",
         ],
-        frameSrc: ["'self'", "https://js.stripe.com"],
+        frameSrc: ["'self'", "https://js.stripe.com", "https://checkout.stripe.com"],
         childSrc: ["'self'", "blob:"],
       },
     },
   }),
 );
+
 app.use(
   cors({
     origin: true, // Allow all origins

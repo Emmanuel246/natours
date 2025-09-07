@@ -29,7 +29,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
     .status(200)
     .set(
       "Content-Security-Policy",
-      "default-src 'self' https://*.mapbox.com ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://api.mapbox.com 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;",
+      "default-src 'self' data: blob: https:; base-uri 'self'; block-all-mixed-content; font-src 'self' https: data:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdnjs.cloudflare.com https://api.mapbox.com https://js.stripe.com 'unsafe-inline' blob: http://127.0.0.1:3000 http://localhost:3000; connect-src 'self' https://api.mapbox.com https://js.stripe.com http://127.0.0.1:3000 http://localhost:3000 ws:; style-src 'self' https: 'unsafe-inline'; upgrade-insecure-requests;",
     )
     .render("tour", {
       title: `${tour.title} Tour`,

@@ -4,7 +4,8 @@ html
         block head
             meta(charset='UTF-8')
             meta(name='viewport' content='width=device-width, initial-scale=1.0')
-            meta(http-equiv='Content-Security-Policy', content="script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;")
+            // allow Stripe, mapbox and local API endpoints for scripts/connect
+            meta(http-equiv='Content-Security-Policy', content="default-src 'self' data: blob:; script-src 'self' https://cdnjs.cloudflare.com https://api.mapbox.com https://js.stripe.com 'unsafe-inline' 'unsafe-eval' http://127.0.0.1:3000 http://localhost:3000; connect-src 'self' https://api.mapbox.com https://js.stripe.com http://127.0.0.1:3000 http://localhost:3000 ws:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:")
             link(rel='stylesheet' href='/css/style.css')
             link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
             link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')

@@ -64,6 +64,8 @@ if (bookBtn)
     bookTour(tourId);
   });
 
+
+
 if (mapBox) {
   try {
     const locations = JSON.parse(mapBox.dataset.locations);
