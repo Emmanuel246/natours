@@ -52,7 +52,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
   });
   const url = `${req.protocol}://${req.get("host")}/me `;
-  console.log(url);
+  // console.log(url);
   await new Email(newUser, url).sendWelcome();
   createSendToken(newUser, 201, res);
 });
@@ -66,7 +66,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
   // 2) Check if user exists && password is correct
   const user = await User.findOne({ email }).select("+password");
-  console.log("Login - Found user:", user); // Add this log
+  // console.log("Login - Found user:", user); // Add this log
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect email or password", 401));
@@ -92,7 +92,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
-    console.log(token);
+    // console.log(token);
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
@@ -110,11 +110,11 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // Try both with and without converting to string
   let currentUser = await User.findById(decoded.id);
-  console.log(currentUser); // Log the current user
+  // console.log(currentUser); // Log the current user
 
   if (!currentUser) {
     // If not found, try with string conversion
-    console.log("Debug - Attempting with ObjectId:", decoded.id);
+    // console.log("Debug - Attempting with ObjectId:", decoded.id);
     currentUser = await User.findById(decoded.id.toString());
   }
 
@@ -123,12 +123,12 @@ exports.protect = catchAsync(async (req, res, next) => {
     currentUser = await User.findOne({ _id: decoded.id });
   }
 
-  console.log("Debug - Database query result:", currentUser);
+  // console.log("Debug - Database query result:", currentUser);
 
   if (!currentUser) {
     // Log all users to verify database connection
     const allUsers = await User.find({}).select("_id email");
-    console.log("Debug - All users in database:", allUsers);
+    // console.log("Debug - All users in database:", allUsers);
 
     return next(
       new AppError("The user belonging to this token does not exist.", 401),
