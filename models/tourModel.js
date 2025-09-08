@@ -45,7 +45,7 @@ const tourSchema = new mongoose.Schema(
       default: 4.5,
       min: [1, "Rating must be above 1.0"],
       max: [5, "Rating must be below 5.0"],
-      set: val => Math.round(val * 10) / 10,
+      set: (val) => Math.round(val * 10) / 10,
     },
     ratingsQuantity: {
       type: Number,
@@ -117,7 +117,6 @@ const tourSchema = new mongoose.Schema(
     ],
   },
 
-
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
@@ -129,16 +128,16 @@ tourSchema.virtual("durationWeeks").get(function () {
 });
 
 // virtual populate
-tourSchema.virtual('reviews', {
-  ref: 'Review',
-  foreignField: 'tour',
-  localField: '_id'
+tourSchema.virtual("reviews", {
+  ref: "Review",
+  foreignField: "tour",
+  localField: "_id",
 });
 
 // tourSchema.index({price: 1});
-tourSchema.index({price: 1, ratingsAverage: -1});
-tourSchema.index({slug: 1});
-tourSchema.index({startLocation: '2dsphere'});
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
+tourSchema.index({ startLocation: "2dsphere" });
 
 // Document Middlware: runs before .save() and .create()
 tourSchema.pre("save", function (next) {
@@ -173,6 +172,16 @@ tourSchema.post(/^find/, function (_, next) {
 //   console.log(this.pipeline());
 //   next();
 // });
+
+// Database Indexes for Performance
+tourSchema.index({ price: 1, ratingsAverage: -1 }); // Compound index for price and ratings
+tourSchema.index({ slug: 1 }); // Single field index for slug
+tourSchema.index({ startLocation: "2dsphere" }); // Geospatial index for location queries
+tourSchema.index({ startDates: 1 }); // Index for date queries
+tourSchema.index({ difficulty: 1, duration: 1 }); // Compound index for filtering
+tourSchema.index({ ratingsAverage: -1 }); // Index for sorting by ratings
+tourSchema.index({ createdAt: -1 }); // Index for sorting by creation date
+
 const Tour = mongoose.model("Tour", tourSchema);
 
 module.exports = Tour;

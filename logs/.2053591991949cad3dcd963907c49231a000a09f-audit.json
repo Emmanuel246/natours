@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/emmanuelmakanjuola/Projects/4-natours/logs/.2053591991949cad3dcd963907c49231a000a09f-audit.json",
+    "files": [
+        {
+            "date": 1757289643975,
+            "name": "/Users/emmanuelmakanjuola/Projects/4-natours/logs/combined-2025-09-08.log",
+            "hash": "06244984fe6b74d2407a939f0933ca265aa57262ea7f60bd16949fdfde1f6a1d"
+        }
+    ],
+    "hashType": "sha256"
+}
